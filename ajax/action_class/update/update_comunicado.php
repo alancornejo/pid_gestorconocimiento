@@ -8,12 +8,8 @@
     /* Comunicado */
     $titulo_comunicado = addslashes($_POST['txt_titulo_com']);
     $string_ruta_correo = $_POST['ruta_correo'];
-    if(strpos($string_ruta_correo, "http://localhost:8080/apl/") == "false"){
-        $url_correo = str_replace("http://localhost:8080/apl/", "/", $string_ruta_correo);
-    }else if(strpos($string_ruta_correo, "http://10.200.10.90/apl/") == "false"){
-        $url_correo = str_replace("http://10.200.10.90/apl/", "/", $string_ruta_correo);
-    }else if(strpos($string_ruta_correo, "http://pid.cosapidata.pe/") == "false"){
-        $url_correo = str_replace("http://pid.cosapidata.pe/", "/", $string_ruta_correo);
+    if(strpos($string_ruta_correo, "http://pid-interbank.sapia.pe/") == "false"){
+        $url_correo = str_replace("http://pid-interbank.sapia.pe/", "/", $string_ruta_correo);
     }else{
         $url_correo = $string_ruta_correo;
     }

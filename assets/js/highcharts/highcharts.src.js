@@ -1565,7 +1565,7 @@ defaultOptions = {
 	credits: {
 		enabled: false,
 		text: 'Cosapi Data',
-		href: 'http://10.200.10.90/apl/',
+		href: 'http://pid-interbank.sapia.pe/',
 		position: {
 			align: 'right',
 			x: -10,

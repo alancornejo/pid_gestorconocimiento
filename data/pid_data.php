@@ -1114,15 +1114,8 @@ Class pid_list {
             }else{
                 $actualizacion = date("d/m/Y h:i a",strtotime($reg->fec_actualizacion));
             }
-            
-            if($_SERVER['SERVER_NAME'] == "localhost"){ 
-                $ruta_correo = "http://".$_SERVER['SERVER_NAME'].":8080/apl/".$reg->url_correo; 
-            }else if($_SERVER['SERVER_NAME'] == "10.200.10.90" || $_SERVER['SERVER_NAME'] == "10.200.10.90/"){ 
-                $ruta_correo = "http://".$_SERVER['SERVER_NAME']."/apl".$reg->url_correo; 
-            }else{ 
-                $ruta_correo = "http://".$_SERVER['SERVER_NAME'].$reg->url_correo;  
-                
-            }
+
+            $ruta_correo = "http://".$_SERVER['SERVER_NAME'].$reg->url_correo;
 
             $array = array(
                 $reg->id_comunicado,

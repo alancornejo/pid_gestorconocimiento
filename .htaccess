@@ -14,7 +14,7 @@ Options All -Indexes
 DirectoryIndex login.php login
 
 RewriteEngine On
-RewriteBase /apl
+#RewriteBase /apl
 #RewriteBase /pid_nuevo
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
