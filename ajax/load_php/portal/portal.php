@@ -24,7 +24,7 @@ $result_casos_a = $object->analistas_area_negocios();
                                 <?php while($row = $result->fetch_assoc()){ ?>
                                 <div class="item <?php if(date("d") == date("d", strtotime($row['fecha_nacimiento']))){ echo "bg-color-blue"; } ?>">
                                     <center>
-                                        <img class="img-responsive" src="<?php if($_SERVER['SERVER_NAME'] == "localhost"){ echo "http://".$_SERVER['SERVER_NAME'].":8080/apl/".$row['img_user']; }else if($_SERVER['SERVER_NAME'] == "10.200.10.90" || $_SERVER['SERVER_NAME'] == "10.200.10.90/"){ echo "http://".$_SERVER['SERVER_NAME']."/apl".$row['img_user']; }else{ echo "http://".$_SERVER['SERVER_NAME'].$row['img_user'];  } ?>" style="width: 200px; height: 200px;" alt="<?= $row['nom_user'] ?>">
+                                        <img class="img-responsive" src="<?= "http://".$_SERVER['SERVER_NAME'].$row['img_user']; ?>" style="width: 200px; height: 200px;" alt="<?= $row['nom_user'] ?>">
                                         <h5 class="text-bold" <?php if(date("d") == date("d", strtotime($row['fecha_nacimiento']))){ echo 'style="color: white"'; } ?>><?= $row['nom_user'] ?></h5>
                                         <h5 class="text-bold" <?php if(date("d") == date("d", strtotime($row['fecha_nacimiento']))){ echo 'style="color: white"'; } ?>><?= date("d/m", strtotime($row['fecha_nacimiento'])) ?></h5>
                                     </center>

@@ -10,13 +10,8 @@ $contenido_noticia = utf8_decode($_POST['txt_contenido_noticia']);
 
 $string_ruta_imagen = $_POST['ruta_imagen_noticia'];
 
-if(strpos($string_ruta_imagen, "http://localhost:8080/apl/") == "false"){
-    $imagen_noticia = str_replace("http://localhost:8080/apl/", "/", $string_ruta_imagen);
-}else if(strpos($string_ruta_imagen, "http://10.200.10.90/apl/") == "false"){
-    $imagen_noticia = str_replace("http://10.200.10.90/apl/", "/", $string_ruta_imagen);
-}else{
-    $imagen_noticia = str_replace("http://pid.cosapidata.pe/", "/", $string_ruta_imagen);
-}
+
+$imagen_noticia = $string_ruta_imagen;
 
 $tipo_noticia = $_POST['sl_tipo_noticia'];
 $fecha_noticia = $_POST['fecha_noticia'];

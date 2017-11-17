@@ -67,7 +67,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | with start and final /
             |
             */
-            'upload_dir' => '/apl/assets/images/KDB/',
+            'upload_dir' => '/assets/images/KDB/',
             /*
             |--------------------------------------------------------------------------
             | relative path from filemanager folder to upload folder
@@ -377,7 +377,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/BITACORAS/',
+	'upload_dir' => '/assets/images/KDB/BITACORAS/',
 
 	/*
 	|--------------------------------------------------------------------------

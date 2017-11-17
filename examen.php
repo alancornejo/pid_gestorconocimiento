@@ -172,10 +172,6 @@ if($row_access['estado_pid'] == 0 || $row_access['inicio_sesion'] == NULL){
                                                         <?php
                                                             if($row_access['img_user'] == NULL || $row_access['img_user'] == ""){
                                                                 $src = "assets/images/avatar_default.jpg";
-                                                            }else if($_SERVER['SERVER_NAME'] == "localhost"){ 
-                                                                $src = "http://".$_SERVER['SERVER_NAME'].":8080/apl/".$row_access['img_user']; 
-                                                            }else if($_SERVER['SERVER_NAME'] == "10.200.10.90" || $_SERVER['SERVER_NAME'] == "10.200.10.90/"){ 
-                                                                $src = "http://".$_SERVER['SERVER_NAME']."/apl".$row_access['img_user']; 
                                                             }else{ 
                                                                 $src = "http://".$_SERVER['SERVER_NAME'].$row_access['img_user'];  
                                                             }
