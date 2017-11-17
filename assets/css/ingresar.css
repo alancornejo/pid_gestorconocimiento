@@ -1,0 +1,263 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Roboto Thin'), local('Roboto-Thin'), url(font_roboto/xookM-L8yP33NJ7966OySA.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'), url(font_roboto/El-bgsteBznJNL5pgUfFLA.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(font_roboto/N5Lbe1fynPA1KT8BFvAiGw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url(font_roboto/Op9nD2u96-RO01_6Io91EA.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url(font_roboto/tZdhd9Zzj0I2MwoD56osIw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Roboto Black'), local('Roboto-Black'), url(font_roboto/bHb1QXRvBr78bu2XNI1xvw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100;
+  src: local('Roboto Thin Italic'), local('Roboto-ThinItalic'), url(font_roboto/lFe6iyon-IsILqabEIIN8vesZW2xOQ-xsNqO47m55DA.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Roboto Light Italic'), local('Roboto-LightItalic'), url(font_roboto/iE8HhaRzdhPxC93dOdA051tXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Roboto Italic'), local('Roboto-Italic'), url(font_roboto/UbXx3E_TVHvOc89N28P2jA.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 500;
+  src: local('Roboto Medium Italic'), local('Roboto-MediumItalic'), url(font_roboto/daIfzbEw-lbjMyv4rMUUTltXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'), url(font_roboto/owYYXKukxFDFjr0ZO8NXh1tXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 900;
+  src: local('Roboto Black Italic'), local('Roboto-BlackItalic'), url(font_roboto/b9PWBSMHrT2zM5FgUdtu0VtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+}
+/* CSS Document */
+
+body {
+    background: url("../images/patterns/15.png");
+}
+#access_box {
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    background-color:  rgba(255, 255, 255, .1);
+    border: 10px solid rgba(255, 255, 255, .1);
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+}
+
+.access_box_interior {
+    border-radius:2px;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    /*min-height:330px;*/
+}
+
+.access_box_interior p {
+    line-height:1.5;
+}
+
+
+.logo_web {
+    width:280px;
+    height:160px;
+}
+
+input[name="username"],
+input[name="email2"],
+input[name="password"],
+input[name="forget"],
+input[data-name="user"],
+input[data-name="pass"] {
+    background:#f2f2f2;
+    border:1px solid #ccc;
+    padding-left:10px;
+    font-size:12px;
+}
+
+.fondo_transparente_login {
+    background: transparent none repeat scroll 0% 0%;
+    border-top: none;
+    width: 400px;
+}
+
+.fix_responsive{
+    margin: 0px auto;
+    margin-bottom: 20px;
+}
+
+div.wrapper{
+    height: 800px;
+}
+
+@media screen and (max-width:800px){
+    
+    .logo_web {
+        width:240px;
+        height:140px;
+    }
+    
+    .fix_responsive{
+        margin: 0px auto;
+        margin-bottom: 20px;
+    }
+    
+    div.text_img_container {
+        display: none;
+    }
+
+    div.wrap {
+        background: transparent;
+        background-image: none!important;
+    }
+
+    div.share-box {
+        display: none;
+    }
+    
+    .fondo_transparente_login {
+        background: transparent none repeat scroll 0% 0%;
+        border-top: none;
+        width: 300px;
+    }
+    
+    div.wrapper{
+        height: 744px;
+    }
+    
+}
+
+@media screen and (max-width:400px){
+    
+    .fix_responsive{
+        margin: 0px auto;
+        margin-bottom: 20px;
+    }
+
+    input[name="username"], input[name="email2"], input[name="password"], input[data-name="user"], input[data-name="pass"] {
+        font-size: 16px;
+    }
+
+    input[name="forget"] {
+        font-size: 12px;
+    }
+    
+    .fondo_transparente_login {
+        background: transparent none repeat scroll 0% 0%;
+        border-top: none;
+        width: 300px;
+    }
+    
+    div.wrapper{
+        height: 744px;
+    }
+
+}
+
+.transparencia {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.contenedor{
+    width:90px;
+    height:80px;
+    position:fixed;
+    right:0px;
+    top: 40px;
+    /*bottom:0px;*/
+}
+.botonF1{
+    width:80px;
+    height:80px;
+    border-radius:100%;
+    background:#05ACEA;
+    right:0;
+    /*bottom:0;*/
+    position:absolute;
+    margin-right:16px;
+    margin-bottom:16px;
+    border:none;
+    outline:none;
+    font-size:36px;
+    transition:.3s;  
+    border-style: solid;
+}
+span{
+    transition:.5s;  
+}
+.botonF1:hover span{
+    transform:rotate(360deg);
+}
+.botonF1:active{
+    transform:scale(1.1);
+}
+.boton{
+    width:40px;
+    height:40px;
+    border-radius:100%;
+    border:none;
+    color:#FFF;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    font-size:28px;
+    outline:none;
+    position:absolute;
+    right:0;
+    bottom:0;
+    margin-right:26px;
+    transform:scale(0);
+}
+
+.effectTada
+{
+    animation:tada 1s infinite;
+    -webkit-animation:tada 1s infinite; /* Safari and Chrome */
+}
+.effectBounce
+{
+    animation:bounce 1s infinite;
+    -webkit-animation:bounce 1s infinite; /* Safari and Chrome */
+}
+.effectSwing
+{
+    animation:swing 1s infinite;
+    -webkit-animation:swing 1s infinite; /* Safari and Chrome */
+}

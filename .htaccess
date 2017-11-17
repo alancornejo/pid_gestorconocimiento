@@ -1,0 +1,44 @@
+ServerSignature Off
+
+Require all granted
+
+LimitRequestBody 1024000000
+
+#ErrorDocument 404 /notfound.php
+#ErrorDocument 403 /forbidden.php
+#ErrorDocument 500 /error.php
+
+Options All -Indexes
+
+<IfModule mod_rewrite.c>
+DirectoryIndex login.php login
+
+RewriteEngine On
+RewriteBase /apl
+#RewriteBase /pid_nuevo
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule ^plataforma plataforma.php [L]
+RewriteRule ^examen examen.php [L]
+RewriteRule ^encuesta encuesta.php [L]
+RewriteRule ^login login.php [L]
+RewriteRule ^logout logout.php [L]
+RewriteRule ^bloqueo bloqueo.php [L]
+RewriteRule ^tecnologicos tecnologicos.php [L]
+RewriteRule ^visualizar_turnos_claro/(.*)$ visualizar/visualizar_turnos_claro.php?id=$1 [L]
+RewriteRule ^visualizar_horarios_responsables/(.*)$ visualizar/visualizar_horarios_responsables.php?id=$1 [L]
+RewriteRule ^seguimiento_casos/(.*)-(.*)$ visualizar/visualizar_grafico_seguimiento.php?mes=$1&ano=$2 [L]
+</IfModule>
+
+<IfModule mod_php5.c>
+php_value upload_max_filesize 800M
+php_value post_max_size 800M
+php_value max_execution_time 259200
+php_value max_input_time 259200
+php_value memory_limit 300M
+php_value session.gc_maxlifetime 1200
+php_value zlib.output_compression 16386
+php_value session.gc_maxlifetime 691200
+php_value session.cookie_lifetime 691200
+</IfModule>
