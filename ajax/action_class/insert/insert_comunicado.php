@@ -23,15 +23,8 @@
 
     $string_ruta_correo = $_POST['ruta_correo'];
 
-    if(strpos($string_ruta_correo, "http://localhost:8080/apl/") == "false"){
-        $url_correo = str_replace("http://localhost:8080/apl/", "/", $string_ruta_correo);
-    }else if(strpos($string_ruta_correo, "http://10.200.10.90/apl/") == "false"){
-        $url_correo = str_replace("http://10.200.10.90/apl/", "/", $string_ruta_correo);
-    }else if(strpos($string_ruta_correo, "http://pid.cosapidata.pe/") == "false"){
-        $url_correo = str_replace("http://pid.cosapidata.pe/", "/", $string_ruta_correo);
-    }else{
-        $url_correo = $string_ruta_correo;
-    }
+    $url_correo = $string_ruta_correo;
+
     $sl_estado = $_POST['sl_estado_com'];
     $contenido_comunicado = addslashes($_POST['txt_contenido_com']);
     $user_id_comunicado = $_SESSION['id_user_apl'];

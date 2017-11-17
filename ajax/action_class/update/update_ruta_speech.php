@@ -12,15 +12,8 @@
     if(strtolower(end($chk_ext)) == "pdf"){
         $string_ruta_speech = $_POST['sel_file_speech'];
 
-        if(strpos($string_ruta_speech, "http://localhost:8080/apl/") == "false"){
-            $filename = str_replace("http://localhost:8080/apl/", "/", $string_ruta_speech);
-        }else if(strpos($string_ruta_speech, "http://10.200.10.90/apl/") == "false"){
-            $filename = str_replace("http://10.200.10.90/apl/", "/", $string_ruta_speech);
-        }else if(strpos($string_ruta_speech, "http://pid.cosapidata.pe/") == "false"){
-            $filename = str_replace("http://pid.cosapidata.pe/", "/", $string_ruta_speech);
-        }else{
-            $filename = $string_ruta_speech;
-        }
+        $filename = $string_ruta_speech;
+
         $result = $object->update_ruta_speech($filename);
         echo 1;
     }else{

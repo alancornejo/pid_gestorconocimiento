@@ -72,7 +72,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | with start and final /
             |
             */
-            'upload_dir' => '/apl/assets/images/KDB/',
+            'upload_dir' => '/assets/images/KDB/',
             /*
             |--------------------------------------------------------------------------
             | relative path from filemanager folder to upload folder
@@ -382,7 +382,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/BITACORAS/',
+	'upload_dir' => '/assets/images/KDB/BITACORAS/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -693,7 +693,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB_BORRADOR/',
+	'upload_dir' => '/assets/images/KDB_BORRADOR/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1004,7 +1004,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/COMUNICADOS/',
+	'upload_dir' => '/assets/images/KDB/COMUNICADOS/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1315,7 +1315,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/COMENTARIOS/',
+	'upload_dir' => '/assets/images/KDB/COMENTARIOS/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1626,7 +1626,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/RD/HORARIOS_RESPONSABLES/',
+	'upload_dir' => '/assets/images/KDB/RD/HORARIOS_RESPONSABLES/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1937,7 +1937,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/RD/TURNOS/',
+	'upload_dir' => '/assets/images/KDB/RD/TURNOS/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -2248,7 +2248,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/RD/SPEECH/',
+	'upload_dir' => '/assets/images/KDB/RD/SPEECH/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -2558,7 +2558,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | with start and final /
             |
             */
-            'upload_dir' => '/apl/assets/images/KDB/RD/MATRIZ_RESPONSABLES/',
+            'upload_dir' => '/assets/images/KDB/RD/MATRIZ_RESPONSABLES/',
             /*
             |--------------------------------------------------------------------------
             | relative path from filemanager folder to upload folder
@@ -2867,7 +2867,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | with start and final /
             |
             */
-            'upload_dir' => '/apl/assets/images/KDB/RD/MATRIZ_JOBS/',
+            'upload_dir' => '/assets/images/KDB/RD/MATRIZ_JOBS/',
             /*
             |--------------------------------------------------------------------------
             | relative path from filemanager folder to upload folder
@@ -3176,7 +3176,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | with start and final /
             |
             */
-            'upload_dir' => '/apl/assets/images/KDB/RD/SEGUIMIENTO_CASOS/',
+            'upload_dir' => '/assets/images/KDB/RD/SEGUIMIENTO_CASOS/',
             /*
             |--------------------------------------------------------------------------
             | relative path from filemanager folder to upload folder
@@ -3486,7 +3486,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/',
+	'upload_dir' => '/assets/images/KDB/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -3797,7 +3797,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/EXAMEN/PROPUESTAS/',
+	'upload_dir' => '/assets/images/KDB/EXAMEN/PROPUESTAS/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -4108,7 +4108,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/apl/assets/images/KDB/PERFIL/',
+	'upload_dir' => '/assets/images/KDB/PERFIL/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -4419,7 +4419,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
       | with start and final /
       |
       */
-      'upload_dir' => '/apl/assets/images/PORTAL/NOTICIAS/',
+      'upload_dir' => '/assets/images/PORTAL/NOTICIAS/',
 
       /*
       |--------------------------------------------------------------------------
