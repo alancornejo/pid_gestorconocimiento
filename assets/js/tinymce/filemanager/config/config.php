@@ -1,4 +1,5 @@
 <?php
+$version = "9.12.1";
 if (session_id() == '') session_start();
 
 mb_internal_encoding('UTF-8');
@@ -8,6 +9,7 @@ mb_language('uni');
 mb_regex_encoding('UTF-8');
 ob_start('mb_output_handler');
 date_default_timezone_set('America/Bogota');
+setlocale(LC_CTYPE, 'en_US'); //correct transliteration
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +65,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | without final / (DON'T TOUCH)
             |
             */
-            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
             /*
             |--------------------------------------------------------------------------
             | path from base_url to base of upload folder
@@ -93,6 +95,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             |
             */
             'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/',
+
+            /*
+            |--------------------------------------------------------------------------
+            | FTP configuration BETA VERSION
+            |--------------------------------------------------------------------------
+            |
+            | If you want enable ftp use write these parametres otherwise leave empty
+            | Remember to set base_url properly to point in the ftp server domain and 
+            | upload dir will be ftp_base_folder + upload_dir so without final /
+            |
+            */
+            'ftp_host'         => false, //put the FTP host
+            'ftp_user'         => "user",
+            'ftp_pass'         => "pass",
+            'ftp_base_folder'  => "base_folder",
+            'ftp_base_url'     => "http://site to ftp root",
+            // Directory where place files before to send to FTP with final /
+            'ftp_temp_folder'  => "../temp/",
+            /*
+            |---------------------------------------------------------------------------
+            | path from ftp_base_folder to base of thumbs folder with start and final /
+            |---------------------------------------------------------------------------
+            */
+            'ftp_thumbs_dir' => '/thumbs/',
+            'ftp_ssl' => false,
+            'ftp_port' => 21,
+
+            /* EXAMPLE
+            'ftp_host'         => "host.com",
+            'ftp_user'         => "test@host.com",
+            'ftp_pass'         => "pass.1",
+            'ftp_base_folder'  => "",
+            'ftp_base_url'     => "http://host.com/testFTP",
+            */
 
             /*
             |--------------------------------------------------------------------------
@@ -136,6 +172,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             */
             'MaxSizeUpload' => 1024,
 
+            /*
+            |--------------------------------------------------------------------------
+            | File and Folder permission
+            |--------------------------------------------------------------------------
+            |
+            */
+            'filePermission' => 0755,
+            'folderPermission' => 0777,
+
 
             /*
             |--------------------------------------------------------------------------
@@ -175,10 +220,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             //convert to lowercase the files and folders name
             'lower_case'							=> false,
 
-            // -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-            // when lazy loading should be turned on.
-            'lazy_loading_file_number_threshold'	=> 0,
-
+            //Add ?484899493349 (time value) to returned images to prevent cache
+            'add_time_to_img'                       => false,
 
             //*******************************************
             //Images limit and resizing configuration
@@ -209,6 +252,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'image_resizing_override'                 => false,
             // If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
             // bigger than $image_max_width or height then it will be converted to those values
+
+            //******************
+            //
+            // WATERMARK IMAGE
+            // 
+            //Watermark url or false
+            'image_watermark'                          => false,
+            # Could be a pre-determined position such as:
+            #           tl = top left,
+            #           t  = top (middle),
+            #           tr = top right,
+            #           l  = left,
+            #           m  = middle,
+            #           r  = right,
+            #           bl = bottom left,
+            #           b  = bottom (middle),
+            #           br = bottom right
+            #           Or, it could be a co-ordinate position such as: 50x100
+            'image_watermark_position'                 => 'br',
+            # padding: If using a pre-determined position you can
+            #         adjust the padding from the edges by passing an amount
+            #         in pixels. If using co-ordinates, this value is ignored.
+            'image_watermark_padding'                 => 0,
 
             //******************
             // Default layout setting
@@ -256,10 +322,6 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'googledoc_enabled'                       => false,
             'googledoc_file_exts'                     => array( 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx' ),
 
-            // Preview with Viewer.js
-            'viewerjs_enabled'                        => false,
-            'viewerjs_file_exts'                      => array( 'pdf', 'odt', 'odp', 'ods' ),
-
             // defines size limit for paste in MB / operation
             // set 'FALSE' for no limit
             'copy_cut_max_size'                       => false,
@@ -302,10 +364,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'hidden_files'                            => array( 'config.php' ),
 
             /*******************
-            * JAVA upload
+            * URL upload
             *******************/
-            'java_upload'                             => false,
-            'JAVAMaxSizeUpload'                       => 200, //Gb
+            'url_upload'                             => true,
 
 
             //************************************
@@ -372,7 +433,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -404,6 +465,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/BITACORAS/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -447,6 +542,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -486,10 +590,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -520,6 +622,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -613,10 +738,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -683,7 +807,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -715,6 +839,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB_BORRADOR/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -758,6 +916,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -797,10 +964,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -831,6 +996,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -924,10 +1112,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -994,7 +1181,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1026,6 +1213,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/COMUNICADOS/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1069,6 +1290,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1108,10 +1338,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -1142,6 +1370,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -1235,10 +1486,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -1305,7 +1555,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1337,6 +1587,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/COMENTARIOS/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1380,6 +1664,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1419,10 +1712,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -1453,6 +1744,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -1546,10 +1860,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -1616,7 +1929,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1648,6 +1961,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/RD/HORARIOS_RESPONSABLES/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1691,6 +2038,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1730,10 +2086,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -1764,6 +2118,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -1857,10 +2234,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -1927,7 +2303,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -1959,6 +2335,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/RD/TURNOS/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -2002,6 +2412,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -2041,10 +2460,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -2075,6 +2492,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -2168,11 +2608,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
-
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 	//************************************
 	//Thumbnail for external use creation
@@ -2238,7 +2676,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -2270,6 +2708,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/RD/SPEECH/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -2313,6 +2785,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -2352,10 +2833,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -2386,6 +2865,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -2479,11 +2981,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
-
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 	//************************************
 	//Thumbnail for external use creation
@@ -2549,7 +3049,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | without final / (DON'T TOUCH)
             |
             */
-            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
             /*
             |--------------------------------------------------------------------------
             | path from base_url to base of upload folder
@@ -2579,6 +3079,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             |
             */
             'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/RD/MATRIZ_RESPONSABLES/',
+
+            /*
+            |--------------------------------------------------------------------------
+            | FTP configuration BETA VERSION
+            |--------------------------------------------------------------------------
+            |
+            | If you want enable ftp use write these parametres otherwise leave empty
+            | Remember to set base_url properly to point in the ftp server domain and 
+            | upload dir will be ftp_base_folder + upload_dir so without final /
+            |
+            */
+            'ftp_host'         => false, //put the FTP host
+            'ftp_user'         => "user",
+            'ftp_pass'         => "pass",
+            'ftp_base_folder'  => "base_folder",
+            'ftp_base_url'     => "http://site to ftp root",
+            // Directory where place files before to send to FTP with final /
+            'ftp_temp_folder'  => "../temp/",
+            /*
+            |---------------------------------------------------------------------------
+            | path from ftp_base_folder to base of thumbs folder with start and final /
+            |---------------------------------------------------------------------------
+            */
+            'ftp_thumbs_dir' => '/thumbs/',
+            'ftp_ssl' => false,
+            'ftp_port' => 21,
+
+            /* EXAMPLE
+            'ftp_host'         => "host.com",
+            'ftp_user'         => "test@host.com",
+            'ftp_pass'         => "pass.1",
+            'ftp_base_folder'  => "",
+            'ftp_base_url'     => "http://host.com/testFTP",
+            */
 
             /*
             |--------------------------------------------------------------------------
@@ -2622,6 +3156,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             */
             'MaxSizeUpload' => 1024,
 
+            /*
+            |--------------------------------------------------------------------------
+            | File and Folder permission
+            |--------------------------------------------------------------------------
+            |
+            */
+            'filePermission' => 0755,
+            'folderPermission' => 0777,
+
 
             /*
             |--------------------------------------------------------------------------
@@ -2661,10 +3204,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             //convert to lowercase the files and folders name
             'lower_case'							=> false,
 
-            // -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-            // when lazy loading should be turned on.
-            'lazy_loading_file_number_threshold'	=> 0,
-
+            //Add ?484899493349 (time value) to returned images to prevent cache
+            'add_time_to_img'                       => false,
 
             //*******************************************
             //Images limit and resizing configuration
@@ -2695,6 +3236,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'image_resizing_override'                 => false,
             // If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
             // bigger than $image_max_width or height then it will be converted to those values
+
+            //******************
+            //
+            // WATERMARK IMAGE
+            // 
+            //Watermark url or false
+            'image_watermark'                          => false,
+            # Could be a pre-determined position such as:
+            #           tl = top left,
+            #           t  = top (middle),
+            #           tr = top right,
+            #           l  = left,
+            #           m  = middle,
+            #           r  = right,
+            #           bl = bottom left,
+            #           b  = bottom (middle),
+            #           br = bottom right
+            #           Or, it could be a co-ordinate position such as: 50x100
+            'image_watermark_position'                 => 'br',
+            # padding: If using a pre-determined position you can
+            #         adjust the padding from the edges by passing an amount
+            #         in pixels. If using co-ordinates, this value is ignored.
+            'image_watermark_padding'                 => 0,
 
             //******************
             // Default layout setting
@@ -2788,11 +3352,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'hidden_files'                            => array( 'config.php' ),
 
             /*******************
-            * JAVA upload
+            * URL upload
             *******************/
-            'java_upload'                             => false,
-            'JAVAMaxSizeUpload'                       => 200, //Gb
-
+            'url_upload'                             => true,
 
             //************************************
             //Thumbnail for external use creation
@@ -2858,7 +3420,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | without final / (DON'T TOUCH)
             |
             */
-            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
             /*
             |--------------------------------------------------------------------------
             | path from base_url to base of upload folder
@@ -2888,6 +3450,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             |
             */
             'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/RD/MATRIZ_JOBS/',
+
+            /*
+            |--------------------------------------------------------------------------
+            | FTP configuration BETA VERSION
+            |--------------------------------------------------------------------------
+            |
+            | If you want enable ftp use write these parametres otherwise leave empty
+            | Remember to set base_url properly to point in the ftp server domain and 
+            | upload dir will be ftp_base_folder + upload_dir so without final /
+            |
+            */
+            'ftp_host'         => false, //put the FTP host
+            'ftp_user'         => "user",
+            'ftp_pass'         => "pass",
+            'ftp_base_folder'  => "base_folder",
+            'ftp_base_url'     => "http://site to ftp root",
+            // Directory where place files before to send to FTP with final /
+            'ftp_temp_folder'  => "../temp/",
+            /*
+            |---------------------------------------------------------------------------
+            | path from ftp_base_folder to base of thumbs folder with start and final /
+            |---------------------------------------------------------------------------
+            */
+            'ftp_thumbs_dir' => '/thumbs/',
+            'ftp_ssl' => false,
+            'ftp_port' => 21,
+
+            /* EXAMPLE
+            'ftp_host'         => "host.com",
+            'ftp_user'         => "test@host.com",
+            'ftp_pass'         => "pass.1",
+            'ftp_base_folder'  => "",
+            'ftp_base_url'     => "http://host.com/testFTP",
+            */
 
             /*
             |--------------------------------------------------------------------------
@@ -2931,6 +3527,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             */
             'MaxSizeUpload' => 1024,
 
+            /*
+            |--------------------------------------------------------------------------
+            | File and Folder permission
+            |--------------------------------------------------------------------------
+            |
+            */
+            'filePermission' => 0755,
+            'folderPermission' => 0777,
+
 
             /*
             |--------------------------------------------------------------------------
@@ -2970,10 +3575,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             //convert to lowercase the files and folders name
             'lower_case'							=> false,
 
-            // -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-            // when lazy loading should be turned on.
-            'lazy_loading_file_number_threshold'	=> 0,
-
+            //Add ?484899493349 (time value) to returned images to prevent cache
+            'add_time_to_img'                       => false,
 
             //*******************************************
             //Images limit and resizing configuration
@@ -3004,6 +3607,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'image_resizing_override'                 => false,
             // If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
             // bigger than $image_max_width or height then it will be converted to those values
+
+            //******************
+            //
+            // WATERMARK IMAGE
+            // 
+            //Watermark url or false
+            'image_watermark'                          => false,
+            # Could be a pre-determined position such as:
+            #           tl = top left,
+            #           t  = top (middle),
+            #           tr = top right,
+            #           l  = left,
+            #           m  = middle,
+            #           r  = right,
+            #           bl = bottom left,
+            #           b  = bottom (middle),
+            #           br = bottom right
+            #           Or, it could be a co-ordinate position such as: 50x100
+            'image_watermark_position'                 => 'br',
+            # padding: If using a pre-determined position you can
+            #         adjust the padding from the edges by passing an amount
+            #         in pixels. If using co-ordinates, this value is ignored.
+            'image_watermark_padding'                 => 0,
 
             //******************
             // Default layout setting
@@ -3097,11 +3723,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'hidden_files'                            => array( 'config.php' ),
 
             /*******************
-            * JAVA upload
+            * URL upload
             *******************/
-            'java_upload'                             => false,
-            'JAVAMaxSizeUpload'                       => 200, //Gb
-
+            'url_upload'                             => true,
 
             //************************************
             //Thumbnail for external use creation
@@ -3167,7 +3791,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             | without final / (DON'T TOUCH)
             |
             */
-            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+            'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
             /*
             |--------------------------------------------------------------------------
             | path from base_url to base of upload folder
@@ -3197,6 +3821,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             |
             */
             'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/RD/SEGUIMIENTO_CASOS/',
+
+            /*
+            |--------------------------------------------------------------------------
+            | FTP configuration BETA VERSION
+            |--------------------------------------------------------------------------
+            |
+            | If you want enable ftp use write these parametres otherwise leave empty
+            | Remember to set base_url properly to point in the ftp server domain and 
+            | upload dir will be ftp_base_folder + upload_dir so without final /
+            |
+            */
+            'ftp_host'         => false, //put the FTP host
+            'ftp_user'         => "user",
+            'ftp_pass'         => "pass",
+            'ftp_base_folder'  => "base_folder",
+            'ftp_base_url'     => "http://site to ftp root",
+            // Directory where place files before to send to FTP with final /
+            'ftp_temp_folder'  => "../temp/",
+            /*
+            |---------------------------------------------------------------------------
+            | path from ftp_base_folder to base of thumbs folder with start and final /
+            |---------------------------------------------------------------------------
+            */
+            'ftp_thumbs_dir' => '/thumbs/',
+            'ftp_ssl' => false,
+            'ftp_port' => 21,
+
+            /* EXAMPLE
+            'ftp_host'         => "host.com",
+            'ftp_user'         => "test@host.com",
+            'ftp_pass'         => "pass.1",
+            'ftp_base_folder'  => "",
+            'ftp_base_url'     => "http://host.com/testFTP",
+            */
 
             /*
             |--------------------------------------------------------------------------
@@ -3240,6 +3898,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             */
             'MaxSizeUpload' => 1024,
 
+            /*
+            |--------------------------------------------------------------------------
+            | File and Folder permission
+            |--------------------------------------------------------------------------
+            |
+            */
+            'filePermission' => 0755,
+            'folderPermission' => 0777,
+
 
             /*
             |--------------------------------------------------------------------------
@@ -3279,10 +3946,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             //convert to lowercase the files and folders name
             'lower_case'							=> false,
 
-            // -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-            // when lazy loading should be turned on.
-            'lazy_loading_file_number_threshold'	=> 0,
-
+            //Add ?484899493349 (time value) to returned images to prevent cache
+            'add_time_to_img'                       => false,
 
             //*******************************************
             //Images limit and resizing configuration
@@ -3313,6 +3978,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'image_resizing_override'                 => false,
             // If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
             // bigger than $image_max_width or height then it will be converted to those values
+
+            //******************
+            //
+            // WATERMARK IMAGE
+            // 
+            //Watermark url or false
+            'image_watermark'                          => false,
+            # Could be a pre-determined position such as:
+            #           tl = top left,
+            #           t  = top (middle),
+            #           tr = top right,
+            #           l  = left,
+            #           m  = middle,
+            #           r  = right,
+            #           bl = bottom left,
+            #           b  = bottom (middle),
+            #           br = bottom right
+            #           Or, it could be a co-ordinate position such as: 50x100
+            'image_watermark_position'                 => 'br',
+            # padding: If using a pre-determined position you can
+            #         adjust the padding from the edges by passing an amount
+            #         in pixels. If using co-ordinates, this value is ignored.
+            'image_watermark_padding'                 => 0,
 
             //******************
             // Default layout setting
@@ -3406,10 +4094,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
             'hidden_files'                            => array( 'config.php' ),
 
             /*******************
-            * JAVA upload
+            * URL upload
             *******************/
-            'java_upload'                             => false,
-            'JAVAMaxSizeUpload'                       => 200, //Gb
+            'url_upload'                             => true,
 
 
             //************************************
@@ -3476,7 +4163,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -3508,6 +4195,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -3551,6 +4272,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -3590,10 +4320,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -3624,6 +4352,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -3717,10 +4468,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -3787,7 +4537,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -3819,6 +4569,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/EXAMEN/thumbs_PROPUESTAS/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -3862,6 +4646,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -3901,10 +4694,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -3935,6 +4726,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -4028,10 +4842,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -4098,7 +4911,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	| without final / (DON'T TOUCH)
 	|
 	*/
-	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+	'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -4130,6 +4943,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	|
 	*/
 	'thumbs_base_path' => '../../../../assets/images/thumbs_KDB/PERFIL/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
 	/*
 	|--------------------------------------------------------------------------
@@ -4173,6 +5020,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	*/
 	'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -4212,10 +5068,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	//convert to lowercase the files and folders name
 	'lower_case'							=> false,
 
-	// -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-	// when lazy loading should be turned on.
-	'lazy_loading_file_number_threshold'	=> 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
 	//*******************************************
 	//Images limit and resizing configuration
@@ -4246,6 +5100,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'image_resizing_override'                 => false,
 	// If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
 	// bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
 	//******************
 	// Default layout setting
@@ -4339,10 +5216,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 	'hidden_files'                            => array( 'config.php' ),
 
 	/*******************
-	* JAVA upload
-	*******************/
-	'java_upload'                             => false,
-	'JAVAMaxSizeUpload'                       => 200, //Gb
+      * URL upload
+      *******************/
+      'url_upload'                             => true,
 
 
 	//************************************
@@ -4409,7 +5285,7 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
       | without final / (DON'T TOUCH)
       |
       */
-      'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && ! in_array(strtolower($_SERVER['HTTPS']), array( 'off', 'no' ))) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+      'base_url' => ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http"). "://". @$_SERVER['HTTP_HOST'],
 
       /*
       |--------------------------------------------------------------------------
@@ -4441,6 +5317,40 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
       |
       */
       'thumbs_base_path' => '../../../../assets/images/thumbs_PORTAL/NOTICIAS/',
+
+      /*
+      |--------------------------------------------------------------------------
+      | FTP configuration BETA VERSION
+      |--------------------------------------------------------------------------
+      |
+      | If you want enable ftp use write these parametres otherwise leave empty
+      | Remember to set base_url properly to point in the ftp server domain and 
+      | upload dir will be ftp_base_folder + upload_dir so without final /
+      |
+      */
+      'ftp_host'         => false, //put the FTP host
+      'ftp_user'         => "user",
+      'ftp_pass'         => "pass",
+      'ftp_base_folder'  => "base_folder",
+      'ftp_base_url'     => "http://site to ftp root",
+      // Directory where place files before to send to FTP with final /
+      'ftp_temp_folder'  => "../temp/",
+      /*
+      |---------------------------------------------------------------------------
+      | path from ftp_base_folder to base of thumbs folder with start and final /
+      |---------------------------------------------------------------------------
+      */
+      'ftp_thumbs_dir' => '/thumbs/',
+      'ftp_ssl' => false,
+      'ftp_port' => 21,
+
+      /* EXAMPLE
+      'ftp_host'         => "host.com",
+      'ftp_user'         => "test@host.com",
+      'ftp_pass'         => "pass.1",
+      'ftp_base_folder'  => "",
+      'ftp_base_url'     => "http://host.com/testFTP",
+      */
 
       /*
       |--------------------------------------------------------------------------
@@ -4484,6 +5394,15 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
       */
       'MaxSizeUpload' => 1024,
 
+      /*
+      |--------------------------------------------------------------------------
+      | File and Folder permission
+      |--------------------------------------------------------------------------
+      |
+      */
+      'filePermission' => 0755,
+      'folderPermission' => 0777,
+
 
       /*
       |--------------------------------------------------------------------------
@@ -4523,10 +5442,8 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
       //convert to lowercase the files and folders name
       'lower_case'                                          => false,
 
-      // -1: There is no lazy loading at all, 0: Always lazy-load images, 0+: The minimum number of the files in a directory
-      // when lazy loading should be turned on.
-      'lazy_loading_file_number_threshold'      => 0,
-
+      //Add ?484899493349 (time value) to returned images to prevent cache
+      'add_time_to_img'                       => false,
 
       //*******************************************
       //Images limit and resizing configuration
@@ -4557,6 +5474,29 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
       'image_resizing_override'                 => false,
       // If set to TRUE then you can specify bigger images than $image_max_width & height otherwise if image_resizing is
       // bigger than $image_max_width or height then it will be converted to those values
+
+      //******************
+      //
+      // WATERMARK IMAGE
+      // 
+      //Watermark url or false
+      'image_watermark'                          => false,
+      # Could be a pre-determined position such as:
+      #           tl = top left,
+      #           t  = top (middle),
+      #           tr = top right,
+      #           l  = left,
+      #           m  = middle,
+      #           r  = right,
+      #           bl = bottom left,
+      #           b  = bottom (middle),
+      #           br = bottom right
+      #           Or, it could be a co-ordinate position such as: 50x100
+      'image_watermark_position'                 => 'br',
+      # padding: If using a pre-determined position you can
+      #         adjust the padding from the edges by passing an amount
+      #         in pixels. If using co-ordinates, this value is ignored.
+      'image_watermark_padding'                 => 0,
 
       //******************
       // Default layout setting
@@ -4650,10 +5590,9 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
       'hidden_files'                            => array( 'config.php' ),
 
       /*******************
-      * JAVA upload
+      * URL upload
       *******************/
-      'java_upload'                             => false,
-      'JAVAMaxSizeUpload'                       => 200, //Gb
+      'url_upload'                             => true,
 
 
       //************************************
@@ -4713,25 +5652,24 @@ if($_SESSION['filemanager_categoria'] == "kdb"){
 
 
 return array_merge(
-	$config,
-	array(
-            'MaxSizeUpload' => ((int)(ini_get('post_max_size')) < $config['MaxSizeUpload'])
-                    ? (int)(ini_get('post_max_size')) : $config['MaxSizeUpload'],
+      $config,
+      array(
             'ext'=> array_merge(
-                    $config['ext_img'],
-                    $config['ext_file'],
-                    $config['ext_misc'],
-                    $config['ext_video'],
-                    $config['ext_music']
+                  $config['ext_img'],
+                  $config['ext_file'],
+                  $config['ext_misc'],
+                  $config['ext_video'],
+                  $config['ext_music']
             ),
             // For a list of options see: https://developers.aviary.com/docs/web/setup-guide#constructor-config
             'aviary_defaults_config' => array(
-                    'apiKey'     => $config['aviary_apiKey'],
-                    'language'   => $config['aviary_language'],
-                    'theme'      => $config['aviary_theme'],
-                    'tools'      => $config['aviary_tools'],
-                    'maxSize'    => $config['aviary_maxSize']
+                  'apiKey'     => $config['aviary_apiKey'],
+                  'language'   => $config['aviary_language'],
+                  'theme'      => $config['aviary_theme'],
+                  'tools'      => $config['aviary_tools'],
+                  'maxSize'    => $config['aviary_maxSize']
             ),
-	)
+      )
 );
 ?>
+

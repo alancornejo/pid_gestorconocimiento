@@ -90,7 +90,7 @@ $result_casos_a = $object->analistas_area_negocios();
                                 <div class="col-md-4">
                                     <div class="easy-block-v2">
                                         <?php if(strtotime($row_noticias['fecha_noticia']) == strtotime(date("Y-m-d"))){ ?><div class="easy-bg-v2 rgba-red" style="letter-spacing: 0px;">Nuevo</div><?php } ?>
-                                        <img class="img-responsive" src="<?php if($_SERVER['SERVER_NAME'] == "localhost"){ echo "http://".$_SERVER['SERVER_NAME'].":8080/apl/".$row_noticias['imagen_noticia']; }else if($_SERVER['SERVER_NAME'] == "10.200.10.90" || $_SERVER['SERVER_NAME'] == "10.200.10.90/"){ echo "http://".$_SERVER['SERVER_NAME']."/apl".$row_noticias['imagen_noticia']; }else{ echo "http://".$_SERVER['SERVER_NAME'].$row_noticias['imagen_noticia'];  } ?>">
+                                        <img class="img-responsive" src="<?= $row_noticias['imagen_noticia'];  ?>">
                                     </div>
                                     <ul class="list-unstyled">
                                         <li><i class="fa-fw fa fa-calendar"></i> <?= date('d/m/y', strtotime($row_noticias['fecha_noticia'])) ?></li>
