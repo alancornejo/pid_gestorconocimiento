@@ -32,7 +32,7 @@
 
     </head>
 
-    <body>
+    <body style="background: transparent none repeat scroll 0% 0%;">
         <div class="contenedor effectBounce">
             <button class="botonF1 abrir">
                 <span><img id="draggable3" src="assets/images/boton_login.png" style="width: 55px;height: 55px;margin-top: -9px;"></span>

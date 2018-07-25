@@ -26,6 +26,7 @@
     $publicado = $_POST['sl_publicado_conocimiento_edit'];
     $ver_cliente = $_POST['sl_cliente_conocimiento_edit'];
     $tipo_conocimiento = $_POST['sl_tipo_servicio_edit'];
+    $publico = $_POST['sl_publico_edit'];
     /* Fin de Conocimiento */
     
     /* Registro */
@@ -45,7 +46,7 @@
     
     $object = new update_pid();
     $object_registro = new insert_pid();
-    if($result = $object->update_conocimiento($id_atu, $titulo, $contenido, $aplicativo, $estado_conocimiento, $tipo_flujo, $grupo_conocimiento, $usuario_resolutor, $fecha_actualizacion, $id, $publicado, $ver_cliente, $tipo_conocimiento)){
+    if($result = $object->update_conocimiento($id_atu, $titulo, $contenido, $aplicativo, $estado_conocimiento, $tipo_flujo, $grupo_conocimiento, $usuario_resolutor, $fecha_actualizacion, $id, $publicado, $ver_cliente, $tipo_conocimiento, $publico)){
         echo "true";
         $result_registro = $object_registro->insertar_registro($modelo_registro, $tipo_registro, $id_modelo, $contenido_registro, $estado_registro, $fecha_registro, $bitacora_contenido, $id_user);
     }else{
