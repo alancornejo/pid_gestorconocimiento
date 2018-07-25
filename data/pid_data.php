@@ -513,6 +513,32 @@ Class pid_list {
         return ($result) ? json_encode($ar) : false ;
     }
 
+    function list_pid_kdb_json_usuario(){
+
+        $sql = "SELECT t.id_tabla, t.id_atu, t.titulo, t.contenido, c.nom_apli, t.aprobado, t.fecha_creacion, t.fecha_actualizacion, t.contador FROM pid_conocimiento t inner join pid_aplicativo c on t.id_apli = c.id_apli WHERE t.aprobado='1' AND t.ver_publico='1' AND t.tipo_conocimiento='0'";
+        $conn = new Connection();
+        $result = $conn->consult($sql);
+        $res = '';
+        $super_array = [];
+        while ($reg = $result->fetch_object()) {
+            $array = array(
+                $reg->id_tabla,
+                $reg->id_atu,
+                $reg->titulo,
+                strip_tags($reg->contenido),
+                $reg->nom_apli,
+                $reg->aprobado,
+                date("d/m/Y",strtotime($reg->fecha_creacion)),
+                date("d/m/Y",strtotime($reg->fecha_actualizacion)),
+                $reg->contador,
+                '<a data-toggle="modal" data-target="#modal_ver_conocimiento" class="btn btn-primary" style="padding: 1px 4rem;" onclick='."'view_atu(".$reg->id_tabla.")'".'  title="Ver Conocimiento"><span class="fa fa-eye" aria-hidden="true"></span></a>'
+            );
+            array_push($super_array, $array);
+        }            
+        $ar = array('data' => $super_array);
+        return ($result) ? json_encode($ar) : false ;
+    }
+
     function list_pid_bitacora_json_gestor(){
 
         $sql = "SELECT b.fec_bitacora, b.txt_impacto, b.user_afectado, g.nom_grupo, c.nom_apli, b.txt_bitacora, b.nom_responsable, b.num_caso, b.num_correo, b.id_estado, b.fec_apertura, b.fec_solucion, b.fec_cierre, b.fec_reasi, b.fec_recepcion, b.id_bitacora FROM pid_bitacora b inner join pid_aplicativo c on b.id_apli = c.id_apli inner join pid_grupo_asignado g on b.id_grupo = g.id_grupo";
@@ -1323,9 +1349,9 @@ Class pid_list {
 
 Class insert_pid {
 
-    function insertar_conocimiento($id_atu,$titulo,$contenido,$aplicativo,$estado_conocimiento,$tipo_flujo,$grupo_conocimiento,$usuario_resolutor,$fecha_creacion,$fecha_actualizacion,$publicado,$ver_cliente,$tipo_conocimiento){
+    function insertar_conocimiento($id_atu,$titulo,$contenido,$aplicativo,$estado_conocimiento,$tipo_flujo,$grupo_conocimiento,$usuario_resolutor,$fecha_creacion,$fecha_actualizacion,$publicado,$ver_cliente,$tipo_conocimiento, $publico){
 
-        $sql = "INSERT INTO pid_conocimiento (`id_atu`, `titulo`, `contenido`, `id_apli`, `id_tipo`, `id_flujo`, `id_grupo`, `id_resolutor`, `fecha_creacion`, `fecha_actualizacion`, `aprobado`, `ver_cliente`, `tipo_conocimiento`) VALUES ('$id_atu', '$titulo','$contenido','$aplicativo','$estado_conocimiento','$tipo_flujo','$grupo_conocimiento','$usuario_resolutor','$fecha_creacion','$fecha_actualizacion','$publicado','$ver_cliente','$tipo_conocimiento')";  
+        $sql = "INSERT INTO pid_conocimiento (`id_atu`, `titulo`, `contenido`, `id_apli`, `id_tipo`, `id_flujo`, `id_grupo`, `id_resolutor`, `fecha_creacion`, `fecha_actualizacion`, `aprobado`, `ver_cliente`, `tipo_conocimiento`, `publico`) VALUES ('$id_atu', '$titulo','$contenido','$aplicativo','$estado_conocimiento','$tipo_flujo','$grupo_conocimiento','$usuario_resolutor','$fecha_creacion','$fecha_actualizacion','$publicado','$ver_cliente','$tipo_conocimiento', '$publico')";  
         $conn = new Connection();
         $result = $conn->consult($sql);
         return $result;
@@ -1550,9 +1576,9 @@ Class insert_pid {
 
 Class update_pid {
 
-    function update_conocimiento($id_atu,$titulo,$contenido,$aplicativo,$estado_conocimiento,$tipo_flujo,$grupo_conocimiento,$usuario_resolutor,$fecha_actualizacion,$id,$publicado,$ver_cliente, $tipo_conocimiento){
+    function update_conocimiento($id_atu,$titulo,$contenido,$aplicativo,$estado_conocimiento,$tipo_flujo,$grupo_conocimiento,$usuario_resolutor,$fecha_actualizacion,$id,$publicado,$ver_cliente, $tipo_conocimiento, $publico){
 
-        $sql = "UPDATE pid_conocimiento SET id_atu='".$id_atu."',titulo='".$titulo."',contenido='".$contenido."',id_apli='".$aplicativo."',id_tipo='".$estado_conocimiento."',id_flujo='".$tipo_flujo."',id_grupo='".$grupo_conocimiento."',id_resolutor='".$usuario_resolutor."',fecha_actualizacion='".$fecha_actualizacion."',aprobado='".$publicado."',ver_cliente='".$ver_cliente."',tipo_conocimiento='".$tipo_conocimiento."' WHERE id_tabla='".$id."'";  
+        $sql = "UPDATE pid_conocimiento SET id_atu='".$id_atu."',titulo='".$titulo."',contenido='".$contenido."',id_apli='".$aplicativo."',id_tipo='".$estado_conocimiento."',id_flujo='".$tipo_flujo."',id_grupo='".$grupo_conocimiento."',id_resolutor='".$usuario_resolutor."',fecha_actualizacion='".$fecha_actualizacion."',aprobado='".$publicado."',ver_cliente='".$ver_cliente."',tipo_conocimiento='".$tipo_conocimiento."',publico='".$publico."' WHERE id_tabla='".$id."'";  
         $conn = new Connection();
         $result = $conn->consult($sql);
         return $result;

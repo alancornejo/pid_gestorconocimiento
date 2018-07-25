@@ -8,11 +8,11 @@ class Connection {
     }
 
     public function __construct() {
-        $this->host   = "mysql_interbank.sapia.pe";
+        $this->host   = "127.0.0.1";
         $this->driver = "mysql";
-        $this->bd     = "interbank_pid";
-        $this->user   = "interbank_pid";
-        $this->pwd    = "Mezeketa6eXE";
+        $this->bd     = "pid";
+        $this->user   = "root";
+        $this->pwd    = "Etelvina12@@@";
     }
 
     public function connect() {

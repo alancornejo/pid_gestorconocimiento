@@ -21,6 +21,7 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 
 RewriteRule ^plataforma plataforma.php [L]
 RewriteRule ^examen examen.php [L]
+RewriteRule ^kdb kdb.php [L]
 RewriteRule ^encuesta encuesta.php [L]
 RewriteRule ^login login.php [L]
 RewriteRule ^logout logout.php [L]

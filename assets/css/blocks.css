@@ -455,30 +455,6 @@
   background-position: center center;
 }
 
-.breadcrumbs-v3.img-v3 {
-  background: url(../images/breadcrumbs/img3.jpg) no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
-
-.mega-menu.img-v3 {
-  background: url(../images/breadcrumbs/img3.jpg) no-repeat !important;
-  background-size: cover !important;
-  background-position: center center !important;
-  border-radius: 0px;
-}
-
-.mega-menu.bg-image-v1 {
-  width: 100%;
-  height: auto;
-  padding: 15px 0;
-  position: relative;
-  background: url(../images/breadcrumbs/img3.jpg) repeat fixed !important;
-  background-size: cover !important;
-  background-position: center center !important;
-  border-radius: 0px;
-}
-
 .efecto_opciones_plataforma {
     background-color: rgba(200, 200, 200, 0.2) !important;
 }

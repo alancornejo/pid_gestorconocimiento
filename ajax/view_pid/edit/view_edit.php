@@ -188,6 +188,18 @@
                         </section>
                     </div>
                     <div class="row">
+                        <section class="col col-4">
+                            <label>Vista Publica : </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+                                <select name="sl_publico_edit" id="inputPublico" class="sl_publico_edit selectpicker_edit form-control show-tick" data-header="Elija la opción : ">
+                                    <option value="0" <?php if($row['publico'] == "0"){ echo "selected"; } ?>>No Público</option>
+                                    <option value="1" <?php if($row['publico'] == "1"){ echo "selected"; } ?>>Público</option>
+                                </select>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
                        <section class="co col-12">
                             <textarea name="txt_contenido_conocimiento_edit" class="txt_contenido_conocimiento_edit editor_conocimiento form-control" rows="3"><?= $row['contenido']; ?></textarea>
                             <textarea name="txt_contenido_original_conocimiento" hidden><?= $row['contenido']; ?></textarea>

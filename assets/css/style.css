@@ -72,6 +72,14 @@ a:hover {
     background: url(../images/patterns/15.png) repeat;
 }
 
+html {
+    background: url(../images/patterns/15.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 .boxed-layout {
   padding: 0;
   box-shadow: 0 0 5px #ccc;

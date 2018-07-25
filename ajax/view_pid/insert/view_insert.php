@@ -185,6 +185,18 @@
                         </section>
                     </div>
                     <div class="row">
+                        <section class="col col-4">
+                            <label>Vista Publica : </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+                                <select name="sl_publico" id="inputPublico" class="sl_publico selectpicker form-control show-tick" data-header="Elija la opción : ">
+                                    <option value="0" selected>No Público</option>
+                                    <option value="1">Público</option>
+                                </select>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="row">
                         <section class="co col-12">
                             <textarea name="txt_contenido_conocimiento" class="txt_contenido_conocimiento editor_conocimiento form-control" rows="3"></textarea>
                         </section>
