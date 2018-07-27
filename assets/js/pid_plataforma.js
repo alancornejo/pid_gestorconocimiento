@@ -29,7 +29,7 @@ $(document).ready(function () {
     
     $('.cuerpo_pid').fadeIn(function(){
         $('.cuerpo_pid').fadeOut(1000,function (){
-            $('.tabla_plataforma').load("ajax/load_php/portal/portal.php");
+            $('.tabla_plataforma').load("ajax/load_php/inicio/tabla_kdb.php");
         });
         parar_tabla_usuarios();
         parar_tabla_asignados();

@@ -25,7 +25,6 @@ $result_list = $object_list->view_category();
                               <th>Fec.Crea.</th>
                               <th>Fec.Actu.</th>
                               <th>Aprobado</th>
-                              <th>Acciones</th>
                           </tr>
                       </thead>
                     </table>
@@ -82,8 +81,7 @@ $result_list = $object_list->view_category();
                     { visible: false },
                     { visible: true },
                     { visible: true },
-                    { visible: false },
-                    { visible: true }
+                    { visible: false }
                 ],
                 language: {
                     sSearch: "Buscar:",
@@ -117,14 +115,14 @@ $result_list = $object_list->view_category();
             /* Modal Ver Datatable */
             $('#tabla_kdb_usuario tbody').on('click', 'tr', function () {
                 var id_documento = tabla_kdb_usuario.row(this).data();
-                $("#modal_ver_conocimiento").modal("show");
+                $("#modal_ver_conocimiento_cliente").modal("show");
                 $.ajax({
                     beforeSend: function(){
                        $('.view_conocimiento_body').html('<div class="cssload-container"><div class="cssload-lt"></div><div class="cssload-rt"></div><div class="cssload-lb"></div><div class="cssload-rb"></div></div>');
                     },
                     cache: false,
                     type: 'GET',
-                    url: 'ajax/view_pid/view_atu.php',
+                    url: 'ajax/view_pid/view_atu_cliente.php',
                     data: 'id=' + id_documento[0],
                     success:function(data){
                        $('.view_conocimiento_body').html(data);
