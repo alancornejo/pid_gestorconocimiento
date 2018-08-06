@@ -119,6 +119,14 @@ $row = $result->fetch_assoc();
             </div>
         </div>
         <div class="tabla_kdb"></div>
+
+        <!-- Modal Ver Conocimiento -->
+        <div id="modal_ver_conocimiento_cliente" class="modal fade" tabindex="-1" role="dialog" style="">
+            <div class="modal-dialog modal-lg-fix">
+                <div class="view_conocimiento_body">
+                </div>
+            </div>
+        </div>
         <!--=== End Content ===-->
 
     </div>
@@ -189,7 +197,7 @@ $row = $result->fetch_assoc();
     <script>
         $(document).ready(function (){
             $(".tabla_kdb").load("ajax/load_php/inicio/tabla_kdb_cliente.php");
-            $('#modal_ver_conocimiento_grafico').on('hidden.bs.modal', function () {
+            $('#modal_ver_conocimiento_cliente').on('hidden.bs.modal', function () {
                 $(document.body).addClass('modal-open');
             });
         });

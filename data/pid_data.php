@@ -4,22 +4,28 @@ Class pid_list {
 
     function list_pid_kdb_json_gestor(){
 
-        $sql = "SELECT t.id_tabla, t.id_atu, t.titulo, t.contenido, c.nom_apli, t.aprobado, t.ver_cliente, t.fecha_creacion, t.fecha_actualizacion, t.contador, t.comentarios, t.tipo_conocimiento FROM pid_conocimiento t inner join pid_aplicativo c on t.id_apli = c.id_apli WHERE t.tipo_conocimiento = '0'";
+        $sql = "SELECT t.id_tabla, t.id_atu, t.titulo, t.contenido, c.nom_apli, t.aprobado, t.ver_cliente, t.fecha_creacion, t.fecha_actualizacion, t.contador, t.comentarios, t.tipo_conocimiento, t.publico FROM pid_conocimiento t inner join pid_aplicativo c on t.id_apli = c.id_apli WHERE t.tipo_conocimiento = '0'";
         $conn = new Connection();
         $result = $conn->consult($sql);
         $res = '';
         $super_array = [];
         while ($reg = $result->fetch_object()) {
             if($reg->aprobado == 1){
-                $estado = '<li class="label label-success">PUBLICADO</li>';
+                $estado = '<li class="label label-success">P</li>';
             }else{
-                $estado = '<li class="label label-danger">NO-PUBLICADO</li>';
+                $estado = '<li class="label label-danger">NP</li>';
             }
 
             if($reg->ver_cliente == 1){
-                $ver_cliente = '<li class="label label-primary"><i class="fa fa-check"></i> SI-VER</li>';
+                $ver_cliente = '<li class="label label-primary"><i class="fa fa-check"></i></li>';
             }else{
-                $ver_cliente = '<li class="label label-info"><i class="fa fa-close"></i> NO-VER</li>';
+                $ver_cliente = '<li class="label label-info"><i class="fa fa-close"></i></li>';
+            }
+
+            if($reg->publico == 1){
+                $publico = '<li class="label label-success"><i class="fa fa-check"></i></li>';
+            }else{
+                $publico = '<li class="label label-danger"><i class="fa fa-close"></i></li>';
             }
             
             if($reg->tipo_conocimiento == 0){
@@ -36,6 +42,7 @@ Class pid_list {
                 $reg->nom_apli,
                 $estado,
                 $ver_cliente,
+                $publico,
                 date("d/m/Y",strtotime($reg->fecha_creacion)),
                 date("d/m/Y",strtotime($reg->fecha_actualizacion)),
                 $reg->contador,
@@ -515,7 +522,7 @@ Class pid_list {
 
     function list_pid_kdb_json_usuario(){
 
-        $sql = "SELECT t.id_tabla, t.id_atu, t.titulo, t.contenido, c.nom_apli, t.aprobado, t.fecha_creacion, t.fecha_actualizacion, t.contador FROM pid_conocimiento t inner join pid_aplicativo c on t.id_apli = c.id_apli WHERE t.aprobado='1' AND t.ver_publico='1' AND t.tipo_conocimiento='0'";
+        $sql = "SELECT t.id_tabla, t.id_atu, t.titulo, t.contenido, c.nom_apli, t.aprobado, t.fecha_creacion, t.fecha_actualizacion, t.contador FROM pid_conocimiento t INNER JOIN pid_aplicativo c ON t.id_apli = c.id_apli WHERE t.aprobado='1' AND t.publico='1' AND t.tipo_conocimiento='0'";
         $conn = new Connection();
         $result = $conn->consult($sql);
         $res = '';
@@ -530,8 +537,7 @@ Class pid_list {
                 $reg->aprobado,
                 date("d/m/Y",strtotime($reg->fecha_creacion)),
                 date("d/m/Y",strtotime($reg->fecha_actualizacion)),
-                $reg->contador,
-                '<a data-toggle="modal" data-target="#modal_ver_conocimiento" class="btn btn-primary" style="padding: 1px 4rem;" onclick='."'view_atu(".$reg->id_tabla.")'".'  title="Ver Conocimiento"><span class="fa fa-eye" aria-hidden="true"></span></a>'
+                $reg->contador
             );
             array_push($super_array, $array);
         }            

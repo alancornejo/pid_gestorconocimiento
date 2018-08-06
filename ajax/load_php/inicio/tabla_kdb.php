@@ -31,8 +31,8 @@ $row_permisos = $result_permisos->fetch_assoc();
                     <div style="float: right; margin-right: 10px;">
                         <select id="dbox_kdb_estado" name="categories" class="show-tick show-menu-arrow" data-live-search="true" data-width="160px" data-header="Estado de Documento">
                             <option data-content="<span class='label label-info'>Todos los estados</span>" value="" selected>TODO</option>
-                            <option data-content="<span class='label label-success'>Publicado</span>" value="PUBLICADO">Publicado</option>
-                            <option data-content="<span class='label label-danger'>No Publicado</span>" value="NO-PUBLICADO">No Publicado</option>
+                            <option data-content="<span class='label label-success'>Publicado</span>" value="P">Publicado</option>
+                            <option data-content="<span class='label label-danger'>No Publicado</span>" value="NP">No Publicado</option>
                         </select>
                         <br>
                     </div>
@@ -63,10 +63,11 @@ $row_permisos = $result_permisos->fetch_assoc();
                                     Aplicativo
                                   <?php } ?>
                               </th>
-                              <th>Estado</th>
+                              <th>Es.</th>
                               <th>V.Clt</th>
-                              <th>Fec.Crea.</th>
-                              <th>Fec.Actu.</th>
+                              <th>E.P.</th>
+                              <th>F.Crea.</th>
+                              <th>F.Actu.</th>
                               <th>Contador</th>
                               <th>Acciones</th>
                           </tr>
@@ -104,8 +105,8 @@ $row_permisos = $result_permisos->fetch_assoc();
                     <div style="float: right; margin-right: 10px;">
                         <select id="dbox_kdb_estado_bio" name="categories" class="show-tick show-menu-arrow" data-live-search="true" data-width="160px" data-header="Estado de Documento">
                             <option data-content="<span class='label label-info'>Todos los estados</span>" value="" selected>TODO</option>
-                            <option data-content="<span class='label label-success'>Publicado</span>" value="PUBLICADO">Publicado</option>
-                            <option data-content="<span class='label label-danger'>No Publicado</span>" value="NO-PUBLICADO">No Publicado</option>
+                            <option data-content="<span class='label label-success'>Publicado</span>" value="P">Publicado</option>
+                            <option data-content="<span class='label label-danger'>No Publicado</span>" value="NP">No Publicado</option>
                         </select>
                         <br>
                     </div>
@@ -290,18 +291,11 @@ $row_permisos = $result_permisos->fetch_assoc();
                     { visible: false },
                     { visible: true },
                     { visible: true },
-                    <?php if($_SESSION['claro_user'] == "E78540"){ ?>
-                        { visible: false },
-                    <?php }else{ ?>
-                         { visible: true },
-                    <?php } ?>
+                    { visible: true },
+                    { visible: true },
                     { visible: false },
                     { visible: true },
-                    <?php if($_SESSION['claro_user'] == "E78540"){ ?>
-                        { visible: true },
-                    <?php }else{ ?>
-                         { visible: false },
-                    <?php } ?>
+                    { visible: false },
                     { visible: true }
                 ],
                 language: {
