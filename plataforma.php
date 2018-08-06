@@ -119,18 +119,7 @@ if($row_access['estado_pid'] == 1 && $row_access['ip_user'] != $ip_user){
             </div>
             <!-- End Topbar -->
 
-            <!-- Navbar -->
-            <div class="navbar navbar-default mega-menu bg-image-v1 parallaxBg" role="navigation">
-                <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="javascript:void(0)">
-                            <img id="logo-header" class="img-responsive img-width-250" src="assets/images/pid_plataforma.png" alt="Logo">
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- End Navbar -->
+      
         </div>
         <!--=== End Header v4 ===-->
         
@@ -1095,7 +1084,7 @@ if($row_access['estado_pid'] == 1 && $row_access['ip_user'] != $ip_user){
                             <div class="col-md-6">
                                 <ul class="footer-socials list-inline">
                                     <li>
-                                        <a href="javascript:void(0)" class="tooltips plataforma_pid" data-toggle="tooltip" data-placement="top" title="" data-original-title="Plataforma PID">
+                                        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Plataforma PID">
                                             <i class="fa fa-codepen"></i> PID 4.0
                                         </a>
                                     </li>

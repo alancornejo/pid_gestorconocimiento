@@ -8,15 +8,19 @@ class Connection {
     }
 
     public function __construct() {
-        $this->host   = "127.0.0.1";
+        $this->host   = "192.167.99.236";
         $this->driver = "mysql";
-        $this->bd     = "pid";
-        $this->user   = "root";
-        $this->pwd    = "Etelvina12@@@";
+        $this->port   = "12589";
+        $this->bd     = "interbank_pid";
+        $this->user   = "interbank_pid";
+        $this->pwd    = "QSSCxZ5E";
     }
 
     public function connect() {
-        $this->conn = mysqli_connect($this->host, $this->user, $this->pwd, $this->bd);
+        $this->conn = mysqli_connect($this->host, $this->user, $this->pwd, $this->bd, $this->port);
+        if (mysqli_connect_errno()) {
+            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+        }
         return $this->conn;
     }
 
