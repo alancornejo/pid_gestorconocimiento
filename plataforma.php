@@ -35,7 +35,7 @@ if($row_access['estado_pid'] == 1 && $row_access['ip_user'] != $ip_user){
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-	<title>PID | Claro Aplicaciones de Negocio</title>
+	<title>PID | Interbank</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">

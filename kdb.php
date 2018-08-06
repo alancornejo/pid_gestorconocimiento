@@ -19,7 +19,7 @@ $row = $result->fetch_assoc();
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-	<title>PID | Claro Aplicaciones de Negocio</title>
+	<title>PID | Interbank</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">
